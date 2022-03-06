@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>社团负责人-荣誉证书申请结果查询</title>
+ <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="reason">否决原因</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+
+<script>
+//用js渲染数据表格
+layui.use('table', function(){
+  var table = layui.table;
+  
+  table.render({
+    elem: '#test'
+    ,url:'../HonorCertifyServlet?type=select'//数据接口
+   // ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+    
+    ,title: '荣誉证书申请审核表'
+   ,cols: [[
+    {type: 'checkbox', fixed: 'left'}
+   ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+   ,{field:'clubname', title:'社团名称', width:120}
+   ,{field:'activityname', title:'活动名称', width:150}
+   ,{field:'activitytime', title:'活动时间', width:150,sort: true}
+   ,{field:'count', title:'参与活动人数', width:150}
+   ,{field:'count1', title:'一等奖获得人数', width:150}
+   ,{field:'count2', title:'二等奖获得人数', width:150}
+   ,{field:'count3', title:'三等奖获得人数', width:150}
+   ,{field:'count4', title:'优秀奖获得人数', width:150}
+   ,{field:'proprieter', title:'社团负责人', width:100}
+   ,{field:'status1', title:'组织部审核状态', width:100}
+   ,{field:'status2', title:'团委审核状态', width:100}
+   ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+  ]]
+  ,page: true
+ });
+  
+ 
+  
+//监听行工具事件
+  table.on('tool(test)', function(obj){//这个obj对象是指数据表格的一行
+	  var data = obj.data;
+    if(obj.event === 'delete'){//审核时点击否决
+      layer.confirm('注意！本操作相当于撤销这条申请记录，真的删除吗？', function(index){
+       obj.del();
+       layer.close(index);
+        //下面代码向服务器传递信息
+        //Jquery Ajax post请求相关数据到后台
+     	$.post("../ButtonDeleteServlet",
+     	{
+     		id:data.id
+     	   ,table:"honorcheck"
+     	},
+     	function(msg,status){
+     		//回调函数
+     		console.log("数据："+msg+"\n状态："+status);
+     		layer.msg(msg);
+     	});
+        
+      });
+    }else if(obj.event === 'reason'){//显示否决原因
+    	layer.alert("组织部否决原因:<br/>"+data.reason1+"<br/><hr/>"+"团委否决原因：<br/>"+data.reason2,{
+    		title:'具体的否决原因'
+    	});
+    }
+  });
+  
+});
+</script>

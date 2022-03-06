@@ -1,0 +1,144 @@
+/*登录页面样式表文件*/
+
+/*全局设置*/
+body{background:url(../images/login_bg.png) no-repeat top center}
+
+/*重置浏览器的默认样式*/
+body,div,form,p,ul,li{padding:0;margin:0; border:0;list-style:none;}
+
+h2{padding:0;margin:0;}
+
+
+/*对三个div盒子设置样式*/
+.one{
+	width:1300px;
+	height:175px;
+}
+.two{
+	width:700px;
+	height:450px;
+	display:inline-block;
+	/*设置为行内块模式，目的是使第三块区域与第二块平行*/
+	margin:20px 20px;
+	padding:30px 10px;
+	position:absolute;
+	left:10px;
+	top:190px;
+}
+.three{
+	width:500px;
+	height:450px;
+	display:inline-block;
+	/*设置为行内块模式，目的是使第三块区域与第二块平行*/
+	padding-top:0 10px 10px 10px;
+	margin-left:35px;
+	position:absolute;
+	top:240px;
+	left:790px;
+}
+
+
+#logo{border-radius:50%;}
+
+h1{
+	display:inline-block;
+	line-height:96px;
+	aligh:center;
+	color:#F60;
+}
+
+/*控制“最新社团活动”中的内容*/
+
+
+.head{
+	font-size:20px;
+	color:#FFF;
+	height:40px;
+	line-height:40px;
+	border-bottom:5px solid #CC5200;	/*单独定义下边框进行覆盖*/
+	background:#F60 url(../images/crossbow.png) no-repeat 9px 5px;
+	padding-left:40px;
+}
+
+.content{
+	padding:25px 0 0 15px;
+	background:#FFF5EE;
+}
+
+.content li{
+	height:30px;
+	background:url(../images/star.png) no-repeat left top;
+	padding-left:22px;
+}
+
+.content li a:link,.content li a:visited{		/*未点击和点击后的样式*/
+	color:#666;
+	text-decoration:none;
+}
+
+.content li a:hover{		/*鼠标悬停时的样式*/
+	color:#F60;
+}
+
+/*会员意见反馈按钮鼠标悬停的颜色#b34700*/
+
+/*以下代码用于控制登录表单部分的样式*/
+
+form{
+	width:420px;
+	height:200px;
+	padding:30px;
+	margin:10px atuo;			/*使表单在该区域中居中*/
+	background:rgba(255,255,255,0.1);	/*为表单添加背景颜色*/
+	border-radius:20px;
+	boder:1px solid rgba(255,255,255,0.3);
+	box-shadow:5px 5px 10px 2px #666;
+	
+}
+p{
+	margin-top:15px;
+	text-align:center;
+}
+p span{
+	width:60px;
+	display:inline-block;
+	text-align:right;
+	font-size:18px;
+}
+.user,.pwd{			/*对文本框设置共同的宽、高、边框、内边框*/
+	width:220px;
+	height:34px;
+	border:1px solid rgba(255,255,255,0.3);
+	padding:2px 2px 2px 40px;
+	border-radius:5px;
+	color:#FFF;
+}
+.user{		/*定义第一个文本框的背景、文本颜色*/
+	background:url(../images/user.png) no-repeat 5px center rgba(255,255,255,0.1);
+}
+.pwd{		/*定义第二个文本框的背景、文本颜色*/
+	background:url(../images/pwd.png) no-repeat 5px center rgba(255,255,255,0.1);
+}
+.btn01{
+	width:275px;
+	height:40px;
+	border-radius:5px;		/*设置圆角边框*/
+	border:none;
+	margin-left:50px;
+	background:#57b2c9;
+	font-size:18px;
+	color:#FFF;
+	
+}
+
+.btn02{
+	width:275px;
+	height:40px;
+	border-radius:5px;
+	border:none;
+	margin:30px 0;
+	background:#CC5200;
+	font-size:18px;
+	color:#FFF;
+}
+

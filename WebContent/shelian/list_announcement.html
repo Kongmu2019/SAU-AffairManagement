@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>组织部-公布获奖人员名单</title>
+ <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>
+
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+
+<script>
+//用js渲染数据表格
+layui.use('table', function(){
+  var table = layui.table;
+  
+  table.render({
+    elem: '#test'
+    ,url:'../AwardNameServlet?type=announcement'//数据接口
+    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+    
+    ,title: '获奖人员名单审核表'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+      ,{field:'clubname', title:'社团名称', width:120}
+      ,{field:'activityname', title:'活动名称', width:150}
+      ,{field:'prizewinner', title:'获奖人姓名', width:150}
+      ,{field:'prize', title:'获得奖项', width:100}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+    ]]
+    ,page: true
+  });
+  
+ 
+  
+  //监听行工具事件
+  table.on('tool(test)', function(obj){//这个obj对象是指数据表格的一行
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'delete'){//点击删除
+        layer.confirm('注意！本操作相当于删除这条获奖名单，真的删除吗？', function(index){
+         obj.del();
+         layer.close(index);
+          //下面代码向服务器传递信息
+          //Jquery Ajax post请求相关数据到后台
+       	$.post("../ButtonDeleteServlet",
+       	{
+       		id:data.id
+       	   ,table:"awardname"
+       	},
+       	function(msg,status){
+       		//回调函数
+       		console.log("数据："+msg+"\n状态："+status);
+       		layer.msg(msg);
+       	});
+          
+        });
+      }
+  });
+});
+</script>

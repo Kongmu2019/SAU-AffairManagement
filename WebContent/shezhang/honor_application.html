@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>荣誉证书申请界面</title>
+ <link rel="stylesheet" href="../layui/css/layui.css">
+ <style type="text/css">
+
+ </style>
+</head>
+<body>
+
+<form class="layui-form" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">社团名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="club" lay-verify="required" autocomplete="off" placeholder="请输入完整的信息" class="layui-input">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">活动名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入完整的信息" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">活动时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="time" lay-verify="required" id="date1" autocomplete="off" class="layui-input" style="width:50%">
+      </div>
+    </div>
+  </div>
+   
+   <div class="layui-form-item">
+    <label class="layui-form-label">参与活动人数</label>
+    <div class="layui-input-inline">
+      <input type="text" name="count" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+    </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">一等奖获奖人数</label>
+    <div class="layui-input-inline">
+      <input type="text" name="count1" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">二等奖获奖人数</label>
+    <div class="layui-input-inline">
+      <input type="text" name="count2" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">三等奖获奖人数</label>
+    <div class="layui-input-inline">
+      <input type="text" name="count3" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">优秀奖获奖人数</label>
+    <div class="layui-input-inline">
+      <input type="text" name="count4" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">社团负责人</label>
+    <div class="layui-input-inline">
+      <input type="text" name="pro" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交申请</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+    </div>
+  </div>
+  </form>
+ 
+
+<script src="../layui/layui.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+
+<script>
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,laydate = layui.laydate
+  ,upload = layui.upload;
+  
+//日期时间范围
+  laydate.render({
+    elem: '#date1'
+    ,type: 'datetime'
+    ,range: true
+  }); 
+  
+  //拖拽上传
+  var uploadInst = upload.render({
+    elem: '#upload1'
+    ,url: '/uploadServlet' //改成您自己的上传接口
+    ,accept:'file'
+    ,done: function(res){
+      layer.msg('上传成功');
+      layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.files.file);
+      console.log(res)
+    }
+  	,error:function(){
+  		layer.msg('上传失败');
+  	}
+  });
+  
+//监听提交
+  form.on('submit(demo1)', function(data){
+    
+    //Jquery Ajax post请求相关数据到后台
+ 	$.post("../HonorCertifyServlet",
+ 	{
+ 	  clubname:data.field.club
+ 	  ,activityname:data.field.name
+ 	  ,activitytime:data.field.time
+ 	  ,count:data.field.count
+ 	  ,count1:data.field.count1
+ 	  ,count2:data.field.count2
+ 	  ,count3:data.field.count3
+ 	  ,count4:data.field.count4
+ 	  ,proprieter:data.field.pro
+ 	  ,status1:"unread"
+ 	  ,status2:"unread"
+ 	  ,reason1:"未填写"
+ 	  ,reason2:"未填写"
+ 	  ,type:"apply"
+ 	},
+ 	function(data,status){
+ 		//回调函数
+ 		console.log("数据："+data+"\n状态："+status);
+ 		layer.alert(data,{
+ 			title:"信息"
+ 		});
+ 	});
+    return false;
+  });
+ 
+  
+});
+</script>
+
+</body>
+</html>
